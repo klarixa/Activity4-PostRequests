@@ -1,0 +1,183 @@
+{
+  "info": "Fallback data for offline testing - JSONPlaceholder simulation",
+  "lastUpdated": "2024-12-19",
+
+  "samplePosts": [
+    {
+      "id": 101,
+      "title": "My First Post",
+      "body": "This is a sample post created offline",
+      "userId": 1
+    },
+    {
+      "id": 102,
+      "title": "Learning APIs",
+      "body": "POST requests are really powerful for creating data",
+      "userId": 2
+    }
+  ],
+
+  "sampleUsers": [
+    {
+      "id": 11,
+      "name": "John Doe",
+      "username": "johndoe",
+      "email": "john@example.com",
+      "phone": "555-1234",
+      "website": "https://johndoe.com"
+    },
+    {
+      "id": 12,
+      "name": "Jane Smith",
+      "username": "janesmith",
+      "email": "jane@example.com",
+      "phone": "555-5678",
+      "website": "https://janesmith.com"
+    }
+  ],
+
+  "sampleComments": [
+    {
+      "id": 501,
+      "postId": 1,
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "body": "Great post! Really helpful information."
+    },
+    {
+      "id": 502,
+      "postId": 1,
+      "name": "Bob Wilson",
+      "email": "bob@example.com",
+      "body": "Thanks for sharing this. I learned a lot!"
+    }
+  ],
+
+  "examples": {
+    "pokemon": {
+      "title": "My Epic Pokemon Team Battle",
+      "body": "Just had an amazing battle with my team of Pikachu, Charmander, and Squirtle! Pikachu's speed really made the difference. The strategy of balancing offense and defense from different types worked perfectly. Electric moves were super effective against the water types we faced. Can't wait for the next gym challenge!",
+      "userId": 1
+    },
+    "recipe": {
+      "title": "Perfect Chocolate Chip Cookies Recipe",
+      "body": "Finally perfected my chocolate chip cookie recipe! The secret is browning the butter first and using a mix of brown and white sugar. Here's what worked: 2 cups flour, 1 cup brown butter, 3/4 cup brown sugar, 1/2 cup white sugar, 2 eggs, 2 cups chocolate chips. Bake at 350°F for exactly 12 minutes. The cookies come out crispy on the edges but soft in the middle - absolute perfection!",
+      "userId": 1
+    },
+    "travel": {
+      "title": "Amazing Weekend in Tokyo",
+      "body": "Just got back from an incredible weekend in Tokyo! Started early at the famous Tsukiji Fish Market for fresh sushi breakfast. Visited the ancient Senso-ji Temple in Asakusa - the incense and traditional architecture were breathtaking. Tried authentic tonkotsu ramen in Shibuya (best meal ever!), and watched the sunrise from Tokyo Skytree at 634 meters high. The cherry blossoms were in full bloom around the Imperial Palace - absolutely magical. Already planning my next trip back to explore Kyoto!",
+      "userId": 1
+    },
+    "gaming": {
+      "title": "New Gaming Setup Complete!",
+      "body": "Finally finished building my dream gaming setup! RTX 4080, 32GB RAM, and a 4K 144Hz monitor. The RGB lighting sync is perfect. First game tested was Cyberpunk 2077 on max settings - incredible ray tracing! Also loving the new mechanical keyboard with cherry MX switches. The tactile feedback makes typing and gaming so much more satisfying.",
+      "userId": 1
+    },
+    "music": {
+      "title": "Learning Guitar - Week 4 Progress",
+      "body": "Four weeks into learning guitar and I can finally play a full song! Started with simple chords (G, C, D) and now I can play 'Wonderwall' without looking at my fingers. Calluses are finally forming so it doesn't hurt as much. Next goal is to learn fingerpicking patterns and maybe some blues progressions. Practice makes perfect!",
+      "userId": 1
+    }
+  },
+
+  "responseTemplates": {
+    "postSuccess": {
+      "id": "{generated_id}",
+      "title": "{submitted_title}",
+      "body": "{submitted_body}",
+      "userId": "{submitted_userId}"
+    },
+    "userSuccess": {
+      "id": "{generated_id}",
+      "name": "{submitted_name}",
+      "username": "{submitted_username}",
+      "email": "{submitted_email}",
+      "phone": "{submitted_phone}",
+      "website": "{submitted_website}"
+    },
+    "commentSuccess": {
+      "id": "{generated_id}",
+      "postId": "{submitted_postId}",
+      "name": "{submitted_name}",
+      "email": "{submitted_email}",
+      "body": "{submitted_body}"
+    },
+    "error": {
+      "error": "Request failed",
+      "message": "This is offline mode - actual API request would be sent to JSONPlaceholder",
+      "timestamp": "{current_timestamp}"
+    }
+  },
+
+  "testScenarios": [
+    {
+      "name": "Basic Post Creation",
+      "description": "Test creating a simple post with title and body",
+      "method": "POST",
+      "endpoint": "/posts",
+      "expectedStatus": 201,
+      "testData": {
+        "title": "Test Post",
+        "body": "This is a test post",
+        "userId": 1
+      }
+    },
+    {
+      "name": "User Registration",
+      "description": "Test creating a new user account",
+      "method": "POST",
+      "endpoint": "/users",
+      "expectedStatus": 201,
+      "testData": {
+        "name": "Test User",
+        "username": "testuser",
+        "email": "test@example.com"
+      }
+    },
+    {
+      "name": "Comment Addition",
+      "description": "Test adding a comment to an existing post",
+      "method": "POST",
+      "endpoint": "/comments",
+      "expectedStatus": 201,
+      "testData": {
+        "postId": 1,
+        "name": "Commenter",
+        "email": "comment@example.com",
+        "body": "This is a test comment"
+      }
+    },
+    {
+      "name": "Post Update",
+      "description": "Test updating an existing post",
+      "method": "PUT",
+      "endpoint": "/posts/1",
+      "expectedStatus": 200,
+      "testData": {
+        "id": 1,
+        "title": "Updated Post Title",
+        "body": "Updated post content",
+        "userId": 1
+      }
+    },
+    {
+      "name": "Post Deletion",
+      "description": "Test deleting a post",
+      "method": "DELETE",
+      "endpoint": "/posts/1",
+      "expectedStatus": 200
+    }
+  ],
+
+  "tips": [
+    "JSONPlaceholder simulates a REST API but doesn't actually store data",
+    "All POST requests will return a 201 status with the created resource",
+    "PUT requests return the full updated resource",
+    "DELETE requests return an empty response with 200 status",
+    "Use the Network tab in DevTools to see actual HTTP requests",
+    "Try different HTTP status codes by using invalid endpoints",
+    "Practice error handling by submitting empty forms",
+    "Compare different request methods (GET vs POST vs PUT vs DELETE)"
+  ]
+}

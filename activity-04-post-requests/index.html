@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST Requests Practice - JSONPlaceholder CRUD</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 POST Request Practice Lab</h1>
+            <p>Practice CRUD operations with JSONPlaceholder API</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="create">CREATE Post</button>
+            <button class="tab-btn" data-tab="user">CREATE User</button>
+            <button class="tab-btn" data-tab="comment">CREATE Comment</button>
+            <button class="tab-btn" data-tab="manage">EDIT/ DELETE Post</button>
+            <button class="tab-btn" data-tab="wizard">✨ POST Wizard</button>
+        </div>
+
+        <!-- CREATE POST TAB -->
+        <div id="create" class="tab-content active">
+            <div class="form-section">
+                <h2>✨ Create New Post</h2>
+                <form id="postForm">
+                    <div class="form-group">
+                        <label for="postTitle">Post Title</label>
+                        <input type="text" id="postTitle" placeholder="Enter an awesome title..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="postBody">Post Content</label>
+                        <textarea id="postBody" placeholder="Share your thoughts... (must be at least 10 characters)"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="postUserId">User ID</label>
+                        <select id="postUserId">
+                            <option value="1">Bret</option>
+                            <option value="2">Antonette</option>
+                            <option value="3">Samantha</option>
+                            <option value="4">Karianne</option>
+                            <option value="5">Kamren</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="postAttachment">Attachment (Optional - Max 1MB)</label>
+                        <input type="file" id="postAttachment" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Create Post</span>
+                        <span class="btn-loader" style="display: none;">Creating...</span>
+                    </button>
+                </form>
+            </div>
+
+            <div class="theme-examples">
+                <h3>🎯 Quick Examples</h3>
+                <div class="example-buttons">
+                    <button onclick="fillExample('pokemon')" class="btn btn-secondary">🔴 Pokemon Post</button>
+                    <button onclick="fillExample('recipe')" class="btn btn-secondary">🍪 Recipe Post</button>
+                    <button onclick="fillExample('travel')" class="btn btn-secondary">✈️ Travel Post</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CREATE USER TAB -->
+        <div id="user" class="tab-content">
+            <div class="form-section">
+                <h2>👤 Create New User</h2>
+                <form id="userForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userName">Full Name</label>
+                            <input type="text" id="userName" placeholder="John Doe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userUsername">Username</label>
+                            <input type="text" id="userUsername" placeholder="johndoe" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="userEmail">Email</label>
+                            <input type="email" id="userEmail" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userPhone">Phone</label>
+                            <input type="tel" id="userPhone" placeholder="555-1234">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="userWebsite">Website</label>
+                        <input type="text" id="userWebsite" placeholder="e.g. johndoe.com">
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Create User</span>
+                        <span class="btn-loader" style="display: none;">Creating...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- CREATE COMMENT TAB -->
+        <div id="comment" class="tab-content">
+            <div class="form-section">
+                <h2>💬 Add Comment to Post</h2>
+                <form id="commentForm">
+                    <div class="form-group">
+                        <label for="commentPostId">Post ID</label>
+                        <input type="number" id="commentPostId" value="1" min="1" max="100" required>
+                        <small>Choose a post ID (1-100) to comment on</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentName">Your Name</label>
+                        <input type="text" id="commentName" placeholder="Your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentEmail">Your Email</label>
+                        <input type="email" id="commentEmail" placeholder="your@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentBody">Comment</label>
+                        <textarea id="commentBody" placeholder="Share your thoughts on this post..."
+                            required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <span class="btn-text">Add Comment</span>
+                        <span class="btn-loader" style="display: none;">Adding...</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- MANAGE DATA TAB -->
+        <div id="manage" class="tab-content">
+            <div class="form-section">
+                <h2>🔧 Update & Delete Operations</h2>
+
+                <div class="operation-section">
+                    <h3>✏️ Update Existing Post</h3>
+                    <form id="updateForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="updateId">Post ID to Update</label>
+                                <input type="number" id="updateId" value="1" min="1" max="100" required>
+                            </div>
+                            <div class="form-group">
+                                <button type="button" onclick="loadPostForUpdate()" class="btn btn-secondary">Load
+                                    Post</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateTitle">Updated Title</label>
+                            <input type="text" id="updateTitle" placeholder="New title..." required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateBody">Updated Content</label>
+                            <textarea id="updateBody" placeholder="Updated content..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-warning">
+                            <span class="btn-text">Update Post</span>
+                            <span class="btn-loader" style="display: none;">Updating...</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="operation-section">
+                    <h3>🗑️ Delete Post</h3>
+                    <div class="delete-controls">
+                        <input type="number" id="deleteId" value="1" min="1" max="100" placeholder="Post ID">
+                        <button onclick="deletePost()" class="btn btn-danger">
+                            <span class="btn-text">Delete Post</span>
+                            <span class="btn-loader" style="display: none;">Deleting...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- POST WIZARD TAB -->
+        <div id="wizard" class="tab-content">
+            <div class="form-section">
+                <h2>✨ Post Creation Wizard</h2>
+                <div class="wizard-group">
+                    <div class="wizard-header">
+                        <div id="stepIndicator" class="step-indicator">Step 1 of 3: Basic Info</div>
+                        <div class="progress-bar-container">
+                            <div id="wizardProgress" class="progress-bar" style="width: 33%;"></div>
+                        </div>
+                    </div>
+
+                    <div id="step1" class="form-step">
+                        <h3>Step 1: Basic Information</h3>
+                        <div class="form-group">
+                            <label for="wizardTitle">Post Title</label>
+                            <input type="text" id="wizardTitle" placeholder="Enter title (min 3 chars)...">
+                        </div>
+                        <div class="form-group">
+                            <label for="wizardUserId">User ID</label>
+                            <select id="wizardUserId">
+                                <option value="1">Bret</option>
+                                <option value="2">Antonette</option>
+                                <option value="3">Samantha</option>
+                                <option value="4">Karianne</option>
+                                <option value="5">Kamren</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="step2" class="form-step hidden">
+                        <h3>Step 2: Content</h3>
+                        <div class="form-group">
+                            <label for="wizardBody">Post Body</label>
+                            <textarea id="wizardBody" placeholder="Enter content (min 10 chars)..."></textarea>
+                        </div>
+                    </div>
+
+                    <div id="step3" class="form-step hidden">
+                        <h3>Step 3: Review & Submit</h3>
+                        <div class="preview-card">
+                            <h4 id="previewTitle"></h4>
+                            <p id="previewBody"></p>
+                            <small id="previewUser"></small>
+                        </div>
+                        <p class="confirmation-text">Does everything look correct? Click submit to post to the API.</p>
+                    </div>
+
+                    <div class="wizard-footer">
+                        <button id="prevBtn" class="btn btn-secondary" onclick="formWizard.previousStep()"
+                            style="display:none">Previous</button>
+                        <button id="nextBtn" class="btn btn-primary" onclick="formWizard.nextStep()">Next</button>
+                        <button id="submitBtn" class="btn btn-primary" onclick="formWizard.submit()"
+                            style="display:none">
+                            <span class="btn-text">Submit Post</span>
+                            <span class="btn-loader" style="display: none;">Submitting...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SECTION -->
+        <div class="results-section">
+            <div class="results-header">
+                <h2>📋 Results</h2>
+                <button onclick="clearResults()" class="btn btn-outline">Clear</button>
+            </div>
+            <div id="results" class="results-content">
+                <p class="placeholder">Results will appear here when you perform operations...</p>
+            </div>
+        </div>
+
+        <!-- NETWORK LOG -->
+        <div class="network-log">
+            <h3>🌐 Network Activity</h3>
+            <div id="networkLog" class="log-content">
+                <p class="placeholder">Network requests will be logged here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
